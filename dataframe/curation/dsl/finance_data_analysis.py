@@ -38,12 +38,12 @@ if __name__ == '__main__':
     finance_df.show(5, False)
 
     finance_df\
-        .orderBy("Amount")\
+        .orderBy(desc("Amount"))\
         .show(5)
 
     # concat_ws function available sql.functions
     finance_df\
-        .select(concat_ws(" - ", "AccountNumber", "Description").alias("AccountDetails"))\
+        .select("AccountNumber", concat_ws(" - ", "AccountNumber", "Description").alias("AccountDetails"))\
         .show(5, False)
 
     finance_df\
