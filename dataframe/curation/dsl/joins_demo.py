@@ -46,7 +46,7 @@ if __name__ == '__main__':
     spark.conf.set("spark.sql.crossJoin.enabled", True)
 
     print('cross join with condition')
-    emp_df.join(role_df, "cross").show(100)
+    emp_df.join(role_df).show(100)
 
 
 
