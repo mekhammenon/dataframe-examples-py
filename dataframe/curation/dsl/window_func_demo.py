@@ -45,6 +45,11 @@ if __name__ == '__main__':
         .withColumn("RollingAvg", avg("Amount").over(accNumPrev4WindowSpec))\
         .show(20, False)
 
+    financeDf\
+        .withColumn("Date", to_date(from_unixtime(unix_timestamp("Date", "MM/dd/yyyy"))))\
+        .withColumn("CumulativeSum", sum("Amount").over(Window.partitionBy('AccountNumber').orderBy('Date').rowsBetween(Window.unboundedPreceding, 0)))\
+        .show(20, False)
+
     productList = [
         Product("Thin", "Cell phone", 6000),
         Product("Normal", "Tablet", 1500),
@@ -74,5 +79,4 @@ if __name__ == '__main__':
                 rank().over(catRevenueWindowSpec).alias("rev_rank"),
                 dense_rank().over(catRevenueWindowSpec).alias("rev_dense_rank")) \
         .show()
-
 # spark-submit --packages "org.apache.hadoop:hadoop-aws:2.7.4" dataframe/curation/dsl/window_func_demo.py
